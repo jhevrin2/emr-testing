@@ -1,2 +1,2 @@
 #!/bin/bash
-pip install pandas scikit-learn
+/usr/bin/pip3 install pandas scikit-learn
