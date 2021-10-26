@@ -19,3 +19,29 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'us-east-1'   # optional: defaults to us-east-1
         DEST_DIR: 'datascience/emr-test'      # optional: defaults to entire repository
+
+
+name: Upload code to s3
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Upload files to S3 with AWS CLI
+        run: |
+          aws s3 sync ./ s3://jhevrin2-datasci/datascience/emr-test --delete --exclude ".git/*" --exclude ".idea/*"
