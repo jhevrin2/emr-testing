@@ -21,4 +21,5 @@ jobs:
 
       - name: Upload files to S3 with AWS CLI
         run: |
+          zip -r project.zip project
           aws s3 sync ./ s3://jhevrin2-datasci/datascience/emr-test --delete --exclude ".git/*" --exclude ".idea/*"

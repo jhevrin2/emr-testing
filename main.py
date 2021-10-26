@@ -1,5 +1,6 @@
 import logging
 import pandas as pd
+from project.utils import print_hello
 from pyspark.sql import SparkSession
 
 logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', datefmt='%m/%d/%Y %H:%M:%S')
@@ -17,6 +18,7 @@ def get_spark_session():
 
 if __name__ == "__main__":
     spark = get_spark_session()
+    print_hello()
     logging.info("Reading and writing to S3")
     data = pd.read_csv("https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv")
     spark_df = spark.createDataFrame(data.select_dtypes(exclude=object))
